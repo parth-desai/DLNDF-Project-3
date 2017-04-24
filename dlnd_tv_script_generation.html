@@ -12513,14 +12513,18 @@ Default GPU Device: /gpu:0
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO: Implement Function</span>
     
+    <span class="c1"># Get the num to total elements across all batches</span>
     <span class="n">num_batch_elements</span><span class="o">=</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">seq_length</span>
-    
+    <span class="c1"># Get num of batches</span>
     <span class="n">n_batches</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">int_text</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="n">num_batch_elements</span>
+    <span class="c1"># Keep only required number of elemets</span>
     <span class="n">int_text</span> <span class="o">=</span> <span class="n">int_text</span><span class="p">[:</span><span class="n">n_batches</span> <span class="o">*</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">seq_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
     
-
-    <span class="n">int_text_sequences</span> <span class="o">=</span> <span class="p">[</span><span class="n">int_text</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">seq_length</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="n">seq_length</span><span class="o">+</span><span class="n">seq_length</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_batches</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">)]</span>
+    <span class="c1"># create the sequences</span>
+    <span class="n">int_text_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">int_text</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">seq_length</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="n">seq_length</span><span class="o">+</span><span class="n">seq_length</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_batches</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">)]</span>
     
+    <span class="c1"># As the target for a character in the sequence is next character so remove the first char </span>
+    <span class="c1"># and read targets from index 1</span>
     <span class="n">int_text</span> <span class="o">=</span> <span class="n">int_text</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
     
     <span class="n">int_text_targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">int_text</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">seq_length</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="n">seq_length</span><span class="o">+</span><span class="n">seq_length</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_batches</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">)]</span>
